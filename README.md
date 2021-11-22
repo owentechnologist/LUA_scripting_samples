@@ -1,5 +1,5 @@
 ## LUA_scripting_samples
-A place to keep LUA scripts to acccomplish various things
+A place to keep LUA scripts to acccomplish writing and reading different types of data to Redis
 
 ###  Using the redis-cli and LUA scripts to test SORTED SET 
 
