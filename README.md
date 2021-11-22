@@ -53,7 +53,7 @@ EVAL "for index =1,ARGV[1] do local t1 = (redis.call('TIME'))[1] local t2 = math
 * [3] max number of keys to add to Redis
 * [4] max number of entries to write to any key
 ```
-EVAL "for index = 1,ARGV[1] do local t1 = (redis.call('TIME'))[1] local t2 = math.random(1, 1000000) for index2 = 1,(index%ARGV[2]) do redis.call('ZADD',KEYS[1]..':PURCH:'..index,t1..'.'..t2,index2*1.25) end end" 1 z:{9999} 20 15
+EVAL "for index = 1,ARGV[1] do local t1 = (redis.call('TIME'))[1] local t2 = math.random(1, 100000) for index2 = 1,(index%ARGV[2]) do redis.call('ZADD',KEYS[1]..':PURCH:'..index,t1..'.'..t2,index2*1.25) end end" 1 z:{9999} 20 15
 ```
 
 
@@ -92,7 +92,7 @@ Scripts:
 * [2] key name to use 
 * [3] max number of entries to add to key
 ```
-EVAL "for index = 1,ARGV[1] do local t = (redis.call('TIME'))[1] local t2 = math.random(1, 1000000)  redis.call('SADD',KEYS[1],''..t..'.'..t2) end" 1 set:s1{1} 10
+EVAL "for index = 1,ARGV[1] do local t = (redis.call('TIME'))[1] local t2 = math.random(1, 100000)  redis.call('SADD',KEYS[1],''..t..'.'..t2) end" 1 set:s1{1} 10
 ```
 
 #### Example Set write Operations: 2
@@ -103,7 +103,7 @@ EVAL "for index = 1,ARGV[1] do local t = (redis.call('TIME'))[1] local t2 = math
 * [2] key name prefix to use for routing to shard
 * [3] max number of keys to add to redis
 ```
-EVAL "for index=1,ARGV[1] do local t = (redis.call('TIME'))[1] local t2 = math.random(1, 1000000) redis.call('SADD',KEYS[1]..':'..index,''..t..':'..t2) end" 1 set:{1} 100
+EVAL "for index=1,ARGV[1] do local t = (redis.call('TIME'))[1] local t2 = math.random(1, 100000) redis.call('SADD',KEYS[1]..':'..index,''..t..':'..t2) end" 1 set:{1} 100
 ```
 
 #### Example Set write Operations: 3
@@ -151,7 +151,7 @@ Scripts:
 * [2] key prefix to use for routing to shard
 * [3] max number of entries to add to key
 ```
-EVAL "for index = 1,ARGV[1] do local t = (redis.call('TIME'))[1] local t2 = math.random(1, 1000000) redis.call('HSET',KEYS[1],'item_'..index..'_cost',(t2%7500*1.25)) end" 1 h:h1{1} 10
+EVAL "for index = 1,ARGV[1] do local t = (redis.call('TIME'))[1] local t2 = math.random(1, 100000) redis.call('HSET',KEYS[1],'item_'..index..'_cost',(t2%7500*1.25)) end" 1 h:h1{1} 10
 ```
 
 #### Example Hash write Operations: 2
@@ -161,7 +161,7 @@ EVAL "for index = 1,ARGV[1] do local t = (redis.call('TIME'))[1] local t2 = math
 * [2] key prefix to use for routing to shard
 * [3] max number of keys to add
 ```
-EVAL "for index = 1,ARGV[1] do local t = (redis.call('TIME'))[1] local t2 = math.random(1, 1000000) redis.call('HSET',KEYS[1]..':'..t2,'item_1_cost',((t2%7500)*1.25)) end" 1 h:{1} 10
+EVAL "for index = 1,ARGV[1] do local t = (redis.call('TIME'))[1] local t2 = math.random(1, 100000) redis.call('HSET',KEYS[1]..':'..t2,'item_1_cost',((t2%7500)*1.25)) end" 1 h:{1} 10
 ```
 
 #### Example Hash write Operations: 3
@@ -172,7 +172,7 @@ EVAL "for index = 1,ARGV[1] do local t = (redis.call('TIME'))[1] local t2 = math
 * [3] max number of keys add
 * [4] string used to enrich the keynames assigned   
 ```
-EVAL "for index = 1,ARGV[1] do local t1 = redis.call('TIME')[1] local t2 = math.random(1, 1000000) for index2 = 1,((t2%15)+1) do local t3 = math.random(1, 1000000) redis.call('HSET',KEYS[1]..':PURCHASES:'..ARGV[2]..t1..'-'..index,'item_'..index2..'_cost',(index2*10.25)) end end" 1 h:{9999} 10 TRGT
+EVAL "for index = 1,ARGV[1] do local t1 = redis.call('TIME')[1] local t2 = math.random(1, 100000) for index2 = 1,((t2%15)+1) do local t3 = math.random(1, 1000000) redis.call('HSET',KEYS[1]..':PURCHASES:'..ARGV[2]..t1..'-'..index,'item_'..index2..'_cost',(index2*10.25)) end end" 1 h:{9999} 10 TRGT
 ```
 
 
