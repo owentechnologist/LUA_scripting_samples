@@ -10,7 +10,7 @@ echo keytype=$(redis-cli -h $host -p $port type $keyname)
 keytype=$(redis-cli -h $host -p $port type $keyname)
 if [ "$keytype"=="zset" ];
 then
-    oput=$(redis-cli -h $host -p $port ZRANDMEMBER $keyname)
-    echo oput
+    oput=$(redis-cli -h $host -p $port ZRANGE $keyname 0 3)
+    echo $oput
 fi
 done
