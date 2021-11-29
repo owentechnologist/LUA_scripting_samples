@@ -36,7 +36,7 @@ EVAL "for index = 1,ARGV[1] do local t = (redis.call('TIME'))[1] local t2 = math
 * args to this script:
 * [1] number of keyname args provided
 * [2] key prefix to use for routing to shard
-* [3] max number of entries to add to key
+* [3] max number of keys to add to redis
 * [4] max number of entries to write to any key   
 ```
 EVAL "for index =1,ARGV[1] do local t1 = (redis.call('TIME'))[1] local t2 = math.random(1, 100000) for index2 = 1,(index%ARGV[2]) do redis.call('ZADD',KEYS[1]..':MID:'..index,t1..'.'..t2,math.random(76, 255)..'.'..(t1%255)..'.'..index..'.'..math.random(1, 100)) end end" 1 z:{9999} 20 46
