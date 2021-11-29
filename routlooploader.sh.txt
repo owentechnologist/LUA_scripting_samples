@@ -13,8 +13,8 @@ routV=$(redis-cli -h redis-6379.homelab.local -p 6379 zrange z:routvalues ${i} $
 echo $routV
 echo redis-cli EVALSHA $bigzs 1 z:ss1{$routV} 20000
 redis-cli EVALSHA $bigzs 1 z:ss1{$routV} 20000
-echo redis-cli EVALSHA $varyzs 1 z:{$routV} 2000 50
-redis-cli EVALSHA $varyzs 1 z:{$routV} 2000 50
+echo redis-cli EVALSHA $varyzs 1 z:{$routV} 20000 50
+redis-cli EVALSHA $varyzs 1 z:{$routV} 20000 50
 oput=$(redis-cli -r 1 -i 1 EVALSHA $avgzsv 1 z:{$routV}:PURCH:${i+1})
 echo $oput
 echo redis-cli -r 3 -i 1 EVALSHA $avgzsv 1 z:{$routV}:PURCH:${i+1}
