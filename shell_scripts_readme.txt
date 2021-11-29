@@ -8,6 +8,7 @@ The routlooploader.sh takes a single argument - the number of different redis sl
 Running routlooploader.sh 32 against a redis database with 8 primary shards takes about 3 minutes and
 results in the memory growing from ~98Mb to ~1.1GB (so about 1Gb of data is written)
 Additionally - roughly 627 thousand keys are written into redis.
+Executing routlooploader.sh 128 took roughly 11 minutes and resulted in 2.5M keys and 4.17GB data
 
 # The shell script lualoader.sh loads 4 LUA scripts and stores their SHA values in keys in redis
 # The shell script routlooploader.sh uses the SHA values to repeatedly load SortedSet data into redis and also issue queries

@@ -1,11 +1,11 @@
 #! /usr/bin/env bash
 
-bigzs=$(redis-cli SCRIPT LOAD "for index = 1,ARGV[1] do local t = (redis.call('TIME'))[1] local t2 = math.random(1, $
-redis-cli set bigzs $bigzs
-varyzs=$(redis-cli SCRIPT LOAD "for index = 1,ARGV[1] do local t1 = (redis.call('TIME'))[1] local t2 = math.random(1$
-redis-cli set varyzs $varyzs
-avgzsv=$(redis-cli SCRIPT LOAD "local zscoreSum = 0 local kname = (redis.call('SCAN',0,'MATCH',KEYS[1]..'*','COUNT',$
+bigzs=$(redis-cli -h redis-6379.homelab.local -p 6379 SCRIPT LOAD "for index = 1,ARGV[1] do local t = (redis.call('TIME'))[1] local t2 = math.random(1, $
+redis-cli -h redis-6379.homelab.local -p 6379 set bigzs $bigzs
+varyzs=$(redis-cli -h redis-6379.homelab.local -p 6379 SCRIPT LOAD "for index = 1,ARGV[1] do local t1 = (redis.call('TIME'))[1] local t2 = math.random(1$
+redis-cli -h redis-6379.homelab.local -p 6379 set varyzs $varyzs
+avgzsv=$(redis-cli -h redis-6379.homelab.local -p 6379 SCRIPT LOAD "local zscoreSum = 0 local kname = (redis.call('SCAN',0,'MATCH',KEYS[1]..'*','COUNT',$
 )
-redis-cli set avgzsv $avgzsv
-calcrouts=$(redis-cli SCRIPT LOAD "local val = 0 for index = 1,ARGV[1] do val = 16384*(index*(100/ARGV[1])) redis.ca$
-redis-cli set calcrouts $calcrouts
+redis-cli set -h redis-6379.homelab.local -p 6379 avgzsv $avgzsv
+calcrouts=$(redis-cli -h redis-6379.homelab.local -p 6379 SCRIPT LOAD "local val = 0 for index = 1,ARGV[1] do val = 16384*(index*(100/ARGV[1])) redis.ca$
+redis-cli -h redis-6379.homelab.local -p 6379 set calcrouts $calcrouts
