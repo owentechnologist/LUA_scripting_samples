@@ -17,8 +17,8 @@ Additionally - roughly 627 thousand keys are written into redis.
 
 Running: routlooploader.sh 64 10000
 takes about 3 minutes and writes about 500MB of data into 627 thousand keys
-
 Executing routlooploader.sh 128 20000 took roughly 11 minutes and resulted in 2.5M keys and 4.17GB data
+routlooploader.sh 1024 1000 took a while... and resulted in a very balanced 1 million keys and 800MB used
 
 # The shell script lualoader.sh loads 4 LUA scripts and stores their SHA values in keys in redis
 # The shell script routlooploader.sh uses the SHA values to repeatedly load SortedSet data into redis
@@ -43,7 +43,7 @@ LUA scripts are convenient, but work best when combined with some kind of contro
 Here it is suggested to use a shell script as a wrapper to multiple calls of a LUA script.
 
 As demonstrated by the two sample shell scripts:
-It makes sense to first load the interesting scripts into redis so they can be more simply invoked:
+It makes sense to first load the interesting LUA scripts into redis so they can be more simply invoked:
 
 SCRIPT LOAD "SCRIPT GOES HERE"
 loadLUA.sh loads 4 scripts into redis and stores their SHA values as Strings in redis for later use
