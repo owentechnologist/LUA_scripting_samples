@@ -1,17 +1,30 @@
-Two shell scripts have been provided
+Three shell scripts have been provided
 lualoader1.sh
-routlooploader.sh <number-of-slots>
+routlooploader.sh <number-of-slots> <number-of-entries>
+repeatrandomread.sh <number-of-repetitions>
 
 lualoader.sh should be executed one time before routlooploader.sh is ever executed.
 
-The routlooploader.sh takes a single argument - the number of different redis slots into which you wish to write data.
-Running routlooploader.sh 32 against a redis database with 8 primary shards takes about 3 minutes and
+The routlooploader.sh takes 2 arguments
+1)- the number of different redis slots into which you wish to write data
+     (for each slot, it will write 1 large SortedSet and many small SortedSets)
+2)- the number of entries to be written in each pass
+     (this should not exceed 25000 as it will block redis for too long)
+
+Running routlooploader.sh 32 20000 against a redis database with 8 primary shards takes about 3 minutes and
 results in the memory growing from ~98Mb to ~1.1GB (so about 1Gb of data is written)
 Additionally - roughly 627 thousand keys are written into redis.
-Executing routlooploader.sh 128 took roughly 11 minutes and resulted in 2.5M keys and 4.17GB data
+
+Running: routlooploader.sh 64 10000
+takes about 3 minutes and writes about 500MB of data into 627 thousand keys
+
+Executing routlooploader.sh 128 20000 took roughly 11 minutes and resulted in 2.5M keys and 4.17GB data
 
 # The shell script lualoader.sh loads 4 LUA scripts and stores their SHA values in keys in redis
-# The shell script routlooploader.sh uses the SHA values to repeatedly load SortedSet data into redis and also issue queries
+# The shell script routlooploader.sh uses the SHA values to repeatedly load SortedSet data into redis
+# routlooploader also performs an aggregation against one of the SortedSets (it outputs the average value stored)
+# The shell script repeatrandomread.sh loops for as many times as you tell it to - grabbing a random key and
+ (if it is a SortedSet) -reporting the value of one member of that SortedSet
 
 NB: THESE SCRIPTS ARE NOT DESIGNED FOR PERFORMANCE TESTING
 In fact: The routlooploader makes several calls using redis-cli - among them is a call where a pause of 1 second occurs.

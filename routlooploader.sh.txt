@@ -1,22 +1,25 @@
 #! /usr/bin/env bash
 
-redis-cli -h redis-6379.homelab.local -p 6379 del z:routvalues
-calcrouts=$(redis-cli -h redis-6379.homelab.local -p 6379 get calcrouts)
+host=redis-6379.homelab.local
+port=6379
 
-redis-cli -h redis-6379.homelab.local -p 6379 EVALSHA $calcrouts 1 z:routvalues $1
-bigzs=$(redis-cli -h redis-6379.homelab.local -p 6379 get bigzs)
-varyzs=$(redis-cli -h redis-6379.homelab.local -p 6379 get varyzs)
-avgzsv=$(redis-cli -h redis-6379.homelab.local -p 6379 get avgzsv)
+redis-cli -h $host -p $port del z:routvalues
+calcrouts=$(redis-cli -h $host -p $port get calcrouts)
+
+redis-cli -h $host -p $port EVALSHA $calcrouts 1 z:routvalues $1
+bigzs=$(redis-cli -h $host -p $port get bigzs)
+varyzs=$(redis-cli -h $host -p $port get varyzs)
+avgzsv=$(redis-cli -h $host -p $port get avgzsv)
 
 for ((i =0; i < $1; i++)) do
-routV=$(redis-cli -h redis-6379.homelab.local -p 6379 zrange z:routvalues ${i} ${i})
+routV=$(redis-cli -h $host -p $port zrange z:routvalues ${i} ${i})
 echo $routV
-echo redis-cli -h redis-6379.homelab.local -p 6379 EVALSHA $bigzs 1 z:ss1{$routV} 20000
-redis-cli -h redis-6379.homelab.local -p 6379 EVALSHA $bigzs 1 z:ss1{$routV} 20000
-echo redis-cli -h redis-6379.homelab.local -p 6379 EVALSHA $varyzs 1 z:{$routV} 20000 50
-redis-cli -h redis-6379.homelab.local -p 6379 EVALSHA $varyzs 1 z:{$routV} 20000 50
-oput=$(redis-cli -h redis-6379.homelab.local -p 6379 -r 1 -i 1 EVALSHA $avgzsv 1 z:{$routV}:PURCH:${i+1})
+echo redis-cli -h $host -p $port EVALSHA $bigzs 1 z:ss1{$routV} $2
+redis-cli -h $host -p $port EVALSHA $bigzs 1 z:ss1{$routV} $2
+echo redis-cli -h $host -p $port EVALSHA $varyzs 1 z:{$routV} $2 50
+redis-cli -h $host -p $port EVALSHA $varyzs 1 z:{$routV} $2 50
+oput=$(redis-cli -h $host -p $port -r 1 -i 1 EVALSHA $avgzsv 1 z:{$routV}:PURCH:${i+1})
 echo $oput
-echo redis-cli -h redis-6379.homelab.local -p 6379 -r 3 -i 1 EVALSHA $avgzsv 1 z:{$routV}:PURCH:${i+1}
-redis-cli -h redis-6379.homelab.local -p 6379 EVALSHA $avgzsv 1 z:{$routV}:PURCH:${i+10}
+echo redis-cli -h $host -p $port -r 3 -i 1 EVALSHA $avgzsv 1 z:{$routV}:PURCH:${i+1}
+redis-cli -h $host -p $port EVALSHA $avgzsv 1 z:{$routV}:PURCH:${i+10}
 done
