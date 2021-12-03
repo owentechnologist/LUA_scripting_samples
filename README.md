@@ -1,7 +1,9 @@
 ## LUA_scripting_samples
-A place to keep LUA scripts to acccomplish writing and reading different types of data to Redis
+A place to keep LUA scripts to accomplish writing and reading different types of data to Redis
 
 ###  Using the redis-cli and LUA scripts to test SORTED SET 
+
+NB: wrapper Shell scripts are also provided (see shell_scripts_readme.txt and LUA_VisualAid.png )
 
 Scripts:
 
