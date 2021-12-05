@@ -1,7 +1,10 @@
 #! /usr/bin/env bash
 
-host=redis-6379.homelab.local
+host=localhost
 port=6379
+
+host2=localhost
+port2=6379
 
 starttime=$(redis-cli -h $host -p $port time)
 
@@ -11,6 +14,8 @@ starttime=${arrIN[0]}
 redis-cli -h $host -p $port EVAL "for index = 1,ARGV[1] do redis.call('HSET',KEYS[1],index,index) end" 1 h:$1 $2
 
 redis-cli -h $host -p $port EVAL "local hashSum = 0 local hashSize = (redis.call('HLEN',KEYS[1])) for index = 1,hashSize do hashSum = (hashSum + (redis.call('HGET',KEYS[1],index))) end return 'Sum of values stored in hash named  '..KEYS[1]..' is '..hashSum" 1 h:$1 $2
+
+redis-cli -h $host2 -p $port2 -i 1 EVAL "local hashSum = 0 local hashSize = (redis.call('HLEN',KEYS[1])) for index = 1,hashSize do hashSum = (hashSum + (redis.call('HGET',KEYS[1],index))) end return 'Calling second host and port... Sum of values stored in hash named  '..KEYS[1]..' is '..hashSum" 1 h:$1 $2
 
 endtime=$(redis-cli -h $host -p $port time)
 
