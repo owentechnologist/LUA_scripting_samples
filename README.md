@@ -1,11 +1,24 @@
 ## LUA_scripting_samples
 A place to keep LUA scripts to accomplish writing and reading different types of data to Redis
 
-###  Using the redis-cli and LUA scripts to test SORTED SET 
 
-NB: wrapper Shell scripts are also provided (see shell_scripts_readme.txt and LUA_VisualAid.png )
+Note: several wrapper Shell scripts are provided (see shell_scripts_readme.txt and LUA_VisualAid.png )
 
-Scripts:
+The simplest of the shell scripts are 
+ReliableWriterReaderSortedSet.sh
+and
+ReliableWriterReaderHash.sh
+
+Those scripts only manipulate a single key each. 
+
+They both take 2 arguments
+1) the name of the key to use for the specific object into which it writes entries
+2) the number of entries to write into that object 
+   
+Both of those scripts sum the amounts of all the entries for the keys they write. 
+
+## Below you will find more LUA scripts:
+###  Using the redis-cli and LUA scripts to test SORTED SET
 
 #### Example SortedSet write Operations: 1
 * populate a single key with several entries:

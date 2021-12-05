@@ -10,6 +10,8 @@ redis-cli -h $host -p $port EVALSHA $calcrouts 1 z:routvalues $1
 bigzs=$(redis-cli -h $host -p $port get bigzs)
 varyzs=$(redis-cli -h $host -p $port get varyzs)
 avgzsv=$(redis-cli -h $host -p $port get avgzsv)
+varyhs=$(redis-cli -h $host -p $port get varyhs)
+
 
 starttime=$(redis-cli -h $host -p $port time)
 
@@ -23,6 +25,9 @@ echo redis-cli -h $host -p $port EVALSHA $bigzs 1 z:ss1{$routV} $2
 redis-cli -h $host -p $port EVALSHA $bigzs 1 z:ss1{$routV} $2
 echo redis-cli -h $host -p $port EVALSHA $varyzs 1 z:{$routV} $2 50
 redis-cli -h $host -p $port EVALSHA $varyzs 1 z:{$routV} $2 50
+
+redis-cli -h $host -p $port EVALSHA $varyhs 1 h:{$routV} 10 TRGT
+
 oput=$(redis-cli -h $host -p $port -r 1 -i 1 EVALSHA $avgzsv 1 z:{$routV}:PURCH:${i+1})
 echo $oput
 echo redis-cli -h $host -p $port -r 3 -i 1 EVALSHA $avgzsv 1 z:{$routV}:PURCH:${i+1}
