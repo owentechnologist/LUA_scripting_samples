@@ -17,6 +17,11 @@ They both take 2 arguments
    
 Both of those scripts sum the amounts of all the entries for the keys they write. 
 
+Example Usage of the ReliableWriterReaderHash.sh would be:
+```
+./ReliableWriterReaderHash.sh myhash1 100
+```
+(be sure to  edit the hostnames and ports within the scripts so they point to the correct endpoints)
 ## Below you will find more LUA scripts:
 ###  Using the redis-cli and LUA scripts to test SORTED SET
 
