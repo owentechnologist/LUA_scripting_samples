@@ -23,6 +23,12 @@ Example Usage of the ReliableWriterReaderHash.sh would be:
 ```
 (be sure to  edit the hostnames and ports within the scripts so they point to the correct endpoints)
 ## Below you will find more LUA scripts:
+
+### Calculate routing values to create even divisions across redis slots
+```
+EVAL "local val = 0 for index = 1,ARGV[1] do val = 16384*(index*(100/ARGV[1])) redis.call('ZADD',KEYS[1],index,math.floor(val/100)) end" 1 z:routvalues 25
+```
+
 ###  Using the redis-cli and LUA scripts to test SORTED SET
 
 #### Example SortedSet write Operations: 1
@@ -195,8 +201,4 @@ EVAL "for index = 1,ARGV[1] do local t = (redis.call('TIME'))[1] local t2 = math
 EVAL "for index = 1,ARGV[1] do local t1 = redis.call('TIME')[1] local t2 = math.random(1, 100000) for index2 = 1,((t2%15)+1) do local t3 = math.random(1, 1000000) redis.call('HSET',KEYS[1]..':PURCHASES:'..ARGV[2]..t1..'-'..index,'item_'..index2..'_cost',(index2*10.25)) end end" 1 h:{9999} 10 TRGT
 ```
 
-### calculate routing values to create even divisions across redis slots
-```
-EVAL "local val = 0 for index = 1,ARGV[1] do val = 16384*(index*(100/ARGV[1])) redis.call('ZADD',KEYS[1],index,math.floor(val/100)) end" 1 z:routvalues 25
-```
 

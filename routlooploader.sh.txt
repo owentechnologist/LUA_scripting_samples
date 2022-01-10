@@ -16,10 +16,10 @@ redis-cli -h $host -p $port del z:routvalues
 calcrouts=$(redis-cli -h $host -p $port get calcrouts)
 
 redis-cli -h $host -p $port EVALSHA $calcrouts 1 z:routvalues $1
-bigzs=$(redis-cli -h $host -p $port get bigzs)
-varyzs=$(redis-cli -h $host -p $port get varyzs)
-avgzsv=$(redis-cli -h $host -p $port get avgzsv)
-varyhs=$(redis-cli -h $host -p $port get varyhs)
+bigzs=$(redis-cli -h $host -p $port get bigzs$host)
+varyzs=$(redis-cli -h $host -p $port get varyzs$host)
+avgzsv=$(redis-cli -h $host -p $port get avgzsv$host)
+varyhs=$(redis-cli -h $host -p $port get varyhs$host)
 
 for ((i =0; i < $1; i++)) do
 routV=$(redis-cli -h $host -p $port zrange z:routvalues ${i} ${i})
