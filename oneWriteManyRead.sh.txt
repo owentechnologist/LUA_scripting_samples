@@ -1,5 +1,8 @@
 #! /usr/bin/env bash
 
+# this script depends on loadLUA.sh being executed before it is run
+# please edit that script and execute it once before running this script
+
 # this script expects to be edited with the following values needing to be set:
 # The host of the target Redis instance
 # The port of the target Redis instance
