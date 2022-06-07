@@ -4,16 +4,19 @@ A place to keep LUA scripts to accomplish writing and reading different types of
 
 Note: several wrapper Shell scripts are provided (see shell_scripts_readme.txt and LUA_VisualAid.png )
 
-###This first utility LUA goes a long way towards deleting keys en mass:
+## This first utility LUA goes a long way towards deleting keys en mass:
 NB: after the final quotation mark come 2 arguments:
 
 1st argument indicates how many keynames will be passed in (always one for this script)
 
 2nd argument is the key pattern or name to use as a prefix against which SCAN will match.  (this is also useful and worthy of attention, as it routes the lua behavior
-to a matching shard for the key pattern or name given)
+to a matching shard for the key pattern or name given
+Note that due to my editor not behaving - the deletion svript that follows has two unneccessary new line statememnts in it...
 
 ```
-EVAL "local cursor = 0 local keyNum = 0 repeat local res = redis.call('scan',cursor,'MATCH',KEYS[1]..'*') if(res ~= nil and #res&gt;=0) then cursor = tonumber(res[1]) local ks = res[2] if(ks ~= nil and #ks&gt;0) then for i=1,#ks,1 do local key = tostring(ks[i]) redis.call('UNLINK',key) end keyNum = keyNum + #ks end end until( cursor &lt;= 0 ) return keyNum" 1 addr:{sgc}
+EVAL "local cursor = 0 local keyNum = 0 repeat local res = redis.call('scan',cursor,'MATCH',KEYS[1]..'*') if(res ~= nil and #res>=0) then 
+cursor = tonumber(res[1]) local ks = res[2] if(ks ~= nil and #ks>0) then for i=1,#ks,1 do local key = tostring(ks[i]) 
+redis.call('UNLINK',key) end keyNum = keyNum + #ks end end until( cursor <= 0 ) return keyNum" 1 memtier
 ```
 
 The simplest of the shell scripts are 
